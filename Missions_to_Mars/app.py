@@ -25,8 +25,15 @@ def scrape():
     html = browser.html
     soup =bs(html, 'html.parser')
 
-    title = soup.find('div', class_='content_title').text
-    paragraph = soup.find('div', class_='article_teaser_body').text
+    try:
+        title = soup.find('div', class_='content_title').text
+    except:
+        title = 'NASA News Title Not Available'
+    
+    try:
+        paragraph = soup.find('div', class_='article_teaser_body').text
+    except:
+        paragraph = 'NASA News Paragraph Not Available'
     
     mars_site_image_url = 'https://www.jpl.nasa.gov/spaceimages/?search=&category=Mars'
     browser.visit(mars_site_image_url)
@@ -37,7 +44,11 @@ def scrape():
 
     mars_featured_image_html = browser.html
     mars_featured_image_soup = bs(mars_featured_image_html, 'html.parser')
-    mars_featured_image_url = mars_featured_image_soup.select_one('img')['src']
+
+    try:
+        mars_featured_image_url = mars_featured_image_soup.select_one('img')['src']
+    except:
+        mars_featured_image_url = "NASA Image Not Available"
 
     image = mars_featured_image_url
 
