@@ -55,32 +55,18 @@ def mars_news(browser):
             mars_subtags = soup.select_one("ul.item_list li.slide")
 
             news_title = mars_subtags.find("div", class_="content_title").get_text()
+            news_parag = mars_subtags.find('div', class_='article_teaser_body').get_text()
             break
         except:
             newstitle_attempts +=1
             time.sleep(5)
             if newstitle_attempts >= 5:
                 news_title = "NASA News Title Not Availble"
+                news_parag = "NASA Paragraph Text Not Available"
 
 # In[184]:
 
 # Paragraph Text
-    paratext_attempts = 0
-
-    while paratext_attempts < 5:
-        try:
-            html = browser.html
-            soup = bs(html, 'html.parser')
-            mars_subtags = soup.select_one("ul.item_list li.slide")
-
-            news_parag = mars_subtags.find('div', class_='article_teaser_body').get_text()
-            break
-        except:
-            paratext_attempts +=1
-            time.sleep(5)
-            if paratext_attempts >=5:
-                news_parag = "NASA Paragraph Text Not Available"
-
 
 # In[185]:
 
@@ -100,6 +86,7 @@ def featured_image(browser):
 
 # Navagate with Browser to Largesize Image
     browser.visit(mars_site_image_url)
+    time.sleep(5)
     browser.links.find_by_partial_text('FULL IMAGE').click()
     browser.links.find_by_partial_text('more info').click()
     browser.links.find_by_partial_href('/largesize/').click()
@@ -156,6 +143,7 @@ def hemisphere(browser):
     browser = Browser('chrome', **executable_path, headless=False)
 
     browser.visit(astrogeoogy_url)
+    time.sleep(5)
 
 # In[197]:
 # Create Empty Lists to Save image urls and Hemisphere titles
